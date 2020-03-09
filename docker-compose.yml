@@ -5,8 +5,8 @@ services:
     build:
       context: ./
       dockerfile: dev.Dockerfile
-    # depends_on:
-    #   - db
+    depends_on:
+      - db
     volumes:
       - ./server:/usr/src/app/server
     ports:
@@ -28,3 +28,34 @@ services:
       - PGDATA=/data
     volumes:
       - ./pg_data:/data
+  test-app:
+    build:
+      context: ./
+    depends_on:
+      - test-db
+    ports:
+      - 3002:3001
+    image: prkl-test-app
+    container_name: prkl-test-app
+    environment:
+      - NODE_ENV=test
+      - PUBLIC_URL=
+      - DB_HOST=test-db
+  test-db:
+    image: postgres:12
+    container_name: prkl_db_test
+    environment:
+      - PGDATA=/data
+    volumes:
+      - ./pg_data_test:/data
+  test:
+    build:
+      context: ./
+      dockerfile: test.Dockerfile
+    depends_on:
+      - test-app
+    image: prkl-test
+    container_name: prkl-test
+    environment:
+      - NODE_ENV=development
+      - CYPRESS_APP_URL=http://test-app:3001

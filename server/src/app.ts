@@ -57,11 +57,8 @@ const main = async (): Promise<void> => {
   app.use(express.static("public"));
   app.get("*", (req, res) => res.sendFile(path.resolve("public", "index.html")));
 
-  // Don't block ports in testing.
-  if (process.env.NODE_ENV !== "test") {
-    app.listen(port);
-    console.log(`Listening to port ${port}`);
-  }
+  app.listen(port);
+  console.log(`Listening to port ${port}`);
 };
 
 main().catch(error => console.error(error));
