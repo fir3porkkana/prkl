@@ -1,4 +1,4 @@
-# Assembler
+# [Assembler](https://study.cs.helsinki.fi/assembler)
 
 Assembler is a tool for automating division of students into project groups. It goes by the nickname "prkl" which is shorthand for _Projektiryhmäytymistyökalu_.
 
